@@ -1,0 +1,11 @@
+// Here you can add other styles
+a.operate{
+  padding: 0 5px;
+  border-right: 1px solid #999;
+  &:last-child{
+    border-right:none;
+  }
+}
+.table tr td{
+  vertical-align: middle;
+}
