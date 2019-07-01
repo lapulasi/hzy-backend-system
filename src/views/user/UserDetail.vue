@@ -1,81 +1,37 @@
 <template>
   <div class="animated fadeIn">
     <b-card sm="12" class="pb-5">
-      <h4 class="title">用户资料</h4>
-      <b-row>
+      <h4 class="title">星星详情</h4>
+      <b-row class="mt-4">
         <b-col cols="1">
-          <b-img rounded="circle" blank width="75" height="75" blank-color="#777" alt="img" class="m-1"/>
-        </b-col>
-        <b-col cols="1">
-          <b-row class="mt-2">
-            豆皮热干面
-          </b-row>
-          <b-row class="mt-4">
-            <i class="icon-symbol-male"></i>中国
-          </b-row>
-        </b-col>
-        <b-col cols="1" offset-md="8">
-          <b-button block variant="outline-primary">发消息</b-button>
-        </b-col>
-        <b-col cols="1">
-          <b-button block variant="outline-primary">编辑</b-button>
+          <b-button block variant="outline-primary" @click="exportStars">导出</b-button>
         </b-col>
       </b-row>
-      <b-row class="mt-5">
-        <b-col cols="2">
-          真实姓名：刘胖春
-        </b-col>
-        <b-col cols="2">
-          生日：2019-01-01
-        </b-col>
-        <b-col cols="2">
-          行业：IT
-        </b-col>
-      </b-row>
-      <b-row class="mt-3">
-        <b-col cols="2">
-          手机号码：13128762198
-        </b-col>
-        <b-col cols="2">
-          年龄：18
-        </b-col>
-        <b-col cols="2">
-          职业：程序员鼓励师
-        </b-col>
-      </b-row>
-      <b-row class="mt-3">
-        <b-col cols="2">
-          邮箱：liupangchun@qq.com
-        </b-col>
-        <b-col cols="2">
-          地址：你猜猜看街道11号
-        </b-col>
-      </b-row>
-      <b-row class="mt-5 px-3">
-        <b-nav>
-          <b-nav-item active>消费记录</b-nav-item>
-          <b-nav-item>评论</b-nav-item>
-          <b-nav-item>反馈</b-nav-item>
-        </b-nav>
-      </b-row>
-      <b-row class="mt-2">
+      <b-row class="mt-4">
         <b-col>
           <table class="table">
             <tr>
               <th v-for="(item, index) in fields">{{item.label}}</th>
             </tr>
-            <tr v-for="(list, index) in items">
-              <td>{{list.username}}</td>
-              <td>{{list.registered}}</td>
-              <td>{{list.role}}</td>
-              <td>{{list.status}}</td>
-              <td><a class="operate" href="#">删除</a></td>
+            <tr v-for="(list, index) in starList">
+              <td>{{index+1}}</td>
+              <td>{{list.changeType}}</td>
+              <td>{{list.changeCount>0? '+'+list.changeCount:list.changeCount}}</td>
+              <td>{{list.changeBehavior}}</td>
+              <td>{{list.starCount}}</td>
+              <td>{{list.convertibleCount}}</td>
+              <td>{{list.authorName}}</td>
+              <td>{{list.poetryTitle}}</td>
+              <td>{{list.recordingTime | formatDate}}</td>
             </tr>
           </table>
         </b-col>
       </b-row>
       <b-row>
-        <cPage @currentPage="getCurrentPage" :totalNums="600"></cPage>
+        <cPage @currentPage="getCurrentPage"
+               @perPageNum="getPerPageNum"
+               :totalNums="totalNums"
+               :isPagePerList="true"></cPage>
       </b-row>
     </b-card>
   </div>
@@ -90,17 +46,73 @@
         time: '',
         items: this.GLOBAL.someData,
         fields: [
-          {key: 'username', label: '购买内容'},
-          {key: 'registered', label: '时间'},
-          {key: 'role', label: '类型'},
-          {key: 'status', label: '消费金额'},
-          {key: 'operate', label: '操作'}
+          {key: 'username', label: '序号'},
+          {key: 'registered', label: '类型'},
+          {key: 'role', label: '星星'},
+          {key: 'status', label: '行为'},
+          {key: 'operate', label: '总星数'},
+          {key: 'operate', label: '可兑换'},
+          {key: 'operate', label: '诗人'},
+          {key: 'operate', label: '诗词'},
+          {key: 'operate', label: '时间'},
         ],
+        currentPage: 0,
+        pageSize: 10,
+        totalNums: 0,
+        starList: []
+      }
+    },
+    created: function () {
+      this.userId = this.$route.query.id; //诗人列表编辑传过来的ID
+      console.log('poetId==' + this.userId);
+      if (this.userId != undefined) {//undefined为新建诗人
+        this.getStarList(this.userId);
+      }
+    },
+    filters: {
+      formatDate: function (value) {
+        let date = new Date(value);
+        let y = date.getFullYear();
+        let MM = date.getMonth() + 1;
+        MM = MM < 10 ? ('0' + MM) : MM;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + MM + '-' + d;
       }
     },
     methods: {
+      getPerPageNum(perPage) {
+        this.pageSize = perPage;
+      },
       getCurrentPage(page) {
-        console.log('pay page==' + page)
+//        console.log('pay page==' + page);
+        this.currentPage = page - 1;
+        this.getStarList();
+      },
+      getStarList() {
+        this.API.getStarRecode({
+          userId: this.userId,
+          page: this.currentPage,
+          pageSize: this.pageSize
+        }).then(res => {
+          if (res.data.errorCode == 200) {
+            var data = res.data.retString;
+            console.log(data);
+            this.starList = data.content;
+            this.totalNums = data.totalElements;
+          } else {
+            alert(res.data.errorMsg);
+          }
+        })
+      },
+      exportStars() {
+        var url = this.API.exportStars() +'?userId='+this.userId
+//        console.log(url);
+        var oA = document.createElement('a');
+        // 利用URL.createObjectURL()方法为a元素生成blob URL
+        oA.href = url;
+        // 模拟点击
+        oA.click();
       }
     },
     components: {
@@ -119,10 +131,12 @@
     margin-right: 6px;
     color: #20a8d8;
   }
-  .nav-item a{
+
+  .nav-item a {
     color: #666;
   }
-  .nav-item .active{
+
+  .nav-item .active {
     border-bottom: 2px solid #20a8d8;
     color: #20a8d8;
   }

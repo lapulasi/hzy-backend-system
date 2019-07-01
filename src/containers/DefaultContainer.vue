@@ -3,10 +3,10 @@
     <AppHeader fixed>
       <b-row>
         <b-col cols="3" offset-md="1">
-          <img class="navbar-brand-full" src="img/shk-logo.png" width="50" height="50" alt="">
+          <img class="navbar-brand-full" src="img/szy-logo.jpeg" width="50" height="50" alt="">
         </b-col>
         <b-col cols="8" style="line-height: 50px; font-size: 18px; font-weight: bold">
-          视惠康管理后台
+          混子曰背古诗
         </b-col>
       </b-row>
       <SidebarToggler class="d-lg-none" display="md" mobile />

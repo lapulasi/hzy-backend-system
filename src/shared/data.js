@@ -2,8 +2,7 @@
  * Created by laplace on 2019/1/10.
  */
 const someData = [
-  {username: 'Samppa Nori', registered: '2012/01/01', role: 'Member', status: 'Active', time: '2019-01-02 13:00:00', relate: '2',
-    operate:'<a style="padding: 0 5px; border-right: 1px solid #999" href="#">编辑</a><a style="padding: 0 5px; border-right: 1px solid #999" href="#">下架</a><a style="padding: 0 5px; border-right: 1px solid #999" href="#">评论</a><a style="padding: 0 5px;" href="#">删除</a>'},
+  // {username: 'Samppa Nori', registered: '2012/01/01', role: 'Member', status: 'Active', time: '2019-01-02 13:00:00', relate: '2',username: 'Samppa Nori', registered: '2012/01/01', role: 'Member', status: 'Active', time: '2019-01-02 13:00:00'},
   {username: 'Estavan Lykos', registered: '2012/02/01', role: 'Staff', status: 'Banned'},
   {username: 'Chetan Mohamed', registered: '2012/02/01', role: 'Admin', status: 'Inactive'},
   {username: 'Derick Maximinus', registered: '2012/03/01', role: 'Member', status: 'Pending'},

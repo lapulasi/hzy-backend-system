@@ -8,52 +8,28 @@ const DefaultContainer = () => import('@/containers/DefaultContainer')
 const Dashboard = () => import('@/views/Dashboard')
 
 
-const Charts = () => import('@/views/Charts')
-const Widgets = () => import('@/views/Widgets')
 
-// Views - course
-const Graphic = () => import('@/views/course/Graphic')
-const Audio = () => import('@/views/course/Audio')
-const Video = () => import('@/views/course/Video')
-const SpecialColumn = () => import('@/views/course/SpecialColumn')
-const NewGraphic = () => import('@/views/course/NewGraphic')
-const NewAudio = () => import('@/views/course/NewAudio')
-const NewVideo = () => import('@/views/course/NewVideo')
-const NewSpecialColumn = () => import('@/views/course/NewSpecialColumn')
-const ContentManagement = () => import('@/views/course/ContentManagement')
+// Views - poet
+const PoetList = () => import('@/views/poet/PoetList')
+const NewPoet = () => import('@/views/poet/NewGraphic')
+const ContentManagement = () => import('@/views/poet/ContentManagement')
 
 
 // Views - operation
-const IndexOperation = () => import('@/views/operation/IndexOperation')
-const ClassificationManagement = () => import('@/views/operation/ClassificationManagement')
-const ClassifyContentManagement = () => import('@/views/operation/ContentManagement')
+const PoetryList = () => import('@/views/poetry/PoetryList')
+const CreatePoetry = () => import('@/views/poetry/CreatePoetry')
 
 // Views - user
 const UserList = () => import('@/views/user/UserList')
-const Messages = () => import('@/views/user/Messages')
-const Rating = () => import('@/views/user/Rating')
+const Messages = () => import('@/views/hotWord/Messages')
 const UserDetail = () => import('@/views/user/UserDetail')
 
 
 // Views - transaction
-const OrderList = () => import('@/views/transaction/OrderList')
-const Pay = () => import('@/views/transaction/Pay')
+const CardList = () => import('@/views/card/CardList')
+const CreateCard = () => import('@/views/card/CreateCard')
 
-// Views - analysis
-const DataOverview = () => import('@/views/analysis/DataOverview')
-const Traffic = () => import('@/views/analysis/Traffic')
-const Transaction = () => import('@/views/analysis/Transaction')
-const Commodity = () => import('@/views/analysis/Commodity')
-const Users = () => import('@/views/analysis/Users')
-
-// Views - settings
-const HotWords = () => import('@/views/settings/HotWords')
-const Roles = () => import('@/views/settings/Roles')
-
-
-// Users
-// const Users = () => import('@/views/users/Users')
-// const User = () => import('@/views/users/User')
+const Login = () => import('@/views/login/Login')
 
 Vue.use(Router)
 
@@ -64,97 +40,102 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/login/login',
       name: 'Home',
       component: DefaultContainer,
       children: [
         {
-          path: 'dashboard',
-          name: 'Dashboard',
-          component: Dashboard
+          path: 'poet/poetList',
+          name: 'PoetList',
+          component: PoetList
         },
         {
-          path: 'course',
-          redirect: '/course/graphic',
-          name: 'Course',
+          path: 'login/login',
+          name: 'Login',
+          component: Login
+        },
+        {
+          path: 'poet',
+          redirect: '/poet/poetList',
+          name: 'Poet',
           component: {
             render (c) { return c('router-view') }
           },
           children: [
             {
-              path: 'graphic',
-              name: 'Graphic',
-              component: Graphic
+              path: 'poet',
+              name: 'Poet',
+              component: PoetList
             },
             {
-              path: 'new-graphic',
-              name: 'NewGraphic',
-              component: NewGraphic
+              path: 'new-poet',
+              name: 'New Poet',
+              component: NewPoet
             },
             {
-              path: 'audio',
-              name: 'Audio',
-              component: Audio
-            },
-            {
-              path: 'new-audio',
-              name: 'NewAudio',
-              component: NewAudio
-            },
-            {
-              path: 'video',
-              name: 'Video',
-              component: Video
-            },
-            {
-              path: 'new-video',
-              name: 'NewVideo',
-              component: NewVideo
-            },
-            {
-              path: 'specialColumn',
-              name: 'SpecialColumn',
-              component: SpecialColumn
-            },
-            {
-              path: 'new-special-column',
-              name: 'NewSpecialColumn',
-              component: NewSpecialColumn
-            },
-            {
-              path: 'content-management',
-              name: 'ContentManagement',
+              path: 'poet-management',
+              name: 'Poet Management',
               component: ContentManagement
             }
           ]
         },
         {
-          path: 'operation',
-          redirect: '/operation/index-operation',
-          name: 'Operation',
+          path: 'poetry',
+          redirect: '/poetry/poetry-list',
+          name: 'Poetry',
           component: {
             render (c) { return c('router-view') }
           },
           children: [
             {
-              path: 'index-operation',
-              name: 'Index Operation',
-              component: IndexOperation
+              path: 'poetry-list',
+              name: 'Poetry List',
+              component: PoetryList
             },
             {
-              path: 'classification-management',
-              name: 'Classification Management',
-              component: ClassificationManagement
-            },
-            {
-              path: 'classify-content-management',
-              name: 'ClassifyContentManagement',
-              component: ClassifyContentManagement
+              path: 'create-poetry',
+              name: 'Create Poetry',
+              component: CreatePoetry
             }
           ]
         },
         {
-          path: 'user',
+          path: 'hotWord',
+          redirect: '/hotWord/hotWord-list',
+          name: 'HotWord',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'hotWord-list',
+              name: 'HotWord List',
+              component: Messages
+            }
+          ]
+        },
+        {
+          path: 'index',
+          redirect: '/index/card-list',
+          name: 'Index',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'card-list',
+              name: 'Card List',
+              component: CardList
+            },
+            {
+              path: 'create-card',
+              name: 'Create Card',
+              component: CreateCard
+            }
+          ]
+        },
+        {
+          path: '/user',
           redirect: '/user/user-list',
           name: 'User',
           component: {
@@ -167,94 +148,9 @@ export default new Router({
               component: UserList
             },
             {
-              path: 'messages',
-              name: 'Messages',
-              component: Messages
-            },
-            {
-              path: 'rating',
-              name: 'Rating',
-              component: Rating
-            },
-            {
               path: 'user-detail',
-              name: 'UserDetail',
+              name: 'User Detail',
               component: UserDetail
-            }
-          ]
-        },
-        {
-          path: 'transaction',
-          redirect: '/transaction/order-list',
-          name: 'Transaction',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'order-list',
-              name: 'OrderList',
-              component: OrderList
-            },
-            {
-              path: 'pay',
-              name: 'Pay',
-              component: Pay
-            }
-          ]
-        },
-        {
-          path: '/analysis',
-          redirect: '/analysis/data-overview',
-          name: 'Analysis',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'data-overview',
-              name: 'Data Overview',
-              component: DataOverview
-            },
-            {
-              path: 'traffic',
-              name: 'Traffic',
-              component: Traffic
-            },
-            {
-              path: 'transaction',
-              name: 'Transaction',
-              component: Transaction
-            },
-            {
-              path: 'commodity',
-              name: 'Commodity',
-              component: Commodity
-            },
-            {
-              path: 'users',
-              name: 'Users',
-              component: Users
-            }
-          ]
-        },
-        {
-          path: '/settings',
-          redirect: '/settings/hot-words',
-          name: 'Settings',
-          component: {
-            render (c) {return c('router-view')}
-          },
-          children: [
-            {
-            path: 'hot-words',
-            name: 'HotWords',
-            component: HotWords
-            },
-            {
-              path: 'roles',
-              name: 'Roles',
-              component: Roles
             }
           ]
         }

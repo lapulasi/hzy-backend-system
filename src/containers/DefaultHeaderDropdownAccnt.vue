@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-img rounded="circle" src="img/avatars/6.jpg" width="50" height="50" alt="img" class="m-1" />
-    系统管理员 <a class="signOut" href="#">退出</a>
+    系统管理员 <a class="signOut" href="javascript:;" @click="exit">退出</a>
   </div>
   <!--<AppHeaderDropdown right no-caret>
     <template slot="header">
@@ -52,7 +52,21 @@ export default {
     AppHeaderDropdown
   },
   data: () => {
-    return { itemsCount: 42 }
+    return {
+      itemsCount: 42,
+      isLogin: false
+    }
+  },
+  created() {
+
+  },
+  methods: {
+    exit() {
+      window.localStorage.setItem('accessToken', '');
+      this.$router.push({
+        path: '/login/login',
+      })
+    }
   }
 }
 </script>
