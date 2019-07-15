@@ -112,7 +112,7 @@
               <td>
                 <div>
                   <a class="operate" href="javascript:;" @click="sort(index)">排序</a>
-                  <a class="operate" href="javascript:;" @click="hide(index)">状态</a>
+                  <a class="operate" href="javascript:;" @click="hide(index)">{{list.isShow == true? '隐藏': '显示'}}</a>
                   <a class="operate" href="javascript:;" @click="goEditor(index)">编辑</a>
                   <!--<a class="operate" href="javascript:;" @click="deletePote(index)">删除</a>-->
                 </div>
@@ -204,16 +204,18 @@
         this.minNum = '';
         this.maxNum = '';
         this.time = '';
+        this.searchPoetry();
       },
       searchPoetry() {
+          console.log(this.time);
         this.API.searchPoetry({
           conditionType: this.classify,
           condition: this.filterContent,
           wordCountSmall: this.minNum,
           wordCountLarge: this.maxNum,
           isShow: this.status == '全部' ? '' : this.status,
-          createTimeStart: this.time != '' ? this.time[0].getTime() : '',
-          createTimeEnd: this.time != '' ? this.time[1].getTime() : '',
+          createTimeStart: (this.time != '' ) ? (this.time[0] == null ? '': this.time[0].getTime()) : '',
+          createTimeEnd: (this.time != '' ) ? (this.time[1] == null ? '': this.time[1].getTime()) : '',
           page: this.currentPage,
           pageSize: this.pageSize
         }).then(res => {
@@ -304,6 +306,7 @@
       },
       getPerPageNum(perPage) {
         this.pageSize = perPage;
+        this.searchPoetry();
       },
       getCurrentPage(page) {
 //        console.log('pay page==' + page);

@@ -25,7 +25,7 @@
         <b-col sm="4">
           <b-row>
             <b-col sm="3">
-              <label style="line-height: 35px;">诗词数量:</label>
+              <label style="line-height: 35px;">总星数:</label>
             </b-col>
             <b-col sm="4">
               <b-form-input id="minNum" v-model="minNum" type="text"></b-form-input>
@@ -106,10 +106,11 @@
               <td>{{index+1}}</td>
               <td>
                 <span>
-                  <b-img src="list.avatar" rounded="circle" blank width="30" height="30" blank-color="#777" alt="img"
+                  <img :src="list.avatar" width="30" height="30" style="border-radius: 50%;"  alt="img"
                          class="m-1"/>
                 </span>
               </td>
+              <td>{{list.nickName}}</td>
               <td>{{list.openId}}</td>
               <td>{{list.phoneNumber}}</td>
               <td>{{list.infantName}}</td>
@@ -164,7 +165,8 @@
         items: this.GLOBAL.someData,
         fields: [
           {key: 'username', label: '序号'},
-          {key: 'username', label: '头像/昵称'},
+          {key: 'username', label: '头像'},
+          {key: 'username', label: '昵称'},
           {key: 'role', label: '微信号'},
           {key: 'registered', label: '电话'},
           {key: 'status', label: '乳名'},
@@ -234,6 +236,7 @@
         this.age = '';
         this.time = '';
         this.remark = '';
+        this.searchUserList();
       },
       searchUserList() {
         this.API.getUserList({
@@ -242,10 +245,10 @@
           starCountSmall: this.minNum,
           starCountLarge: this.maxNum,
           sexInt: this.gender,
-          ageSmall: this.age ? this.age[0] : '',
-          ageLarge: this.age ? this.age[1] : '',
-          registerTimeStart: this.time ? this.time[0] : '',
-          registerTimeEnd: this.time ? this.time[1] : '',
+          ageSmall: this.age != '' ? this.age[0] : '',
+          ageLarge: this.age != '' ? this.age[1] : '',
+          registerTimeStart: this.time != '' ? (this.time[0] == null ? '': this.time[0].getTime()) : '',
+          registerTimeEnd: this.time != ''? (this.time[1] == null ? '': this.time[1].getTime()) : '',
           remarkStatus: this.remark,
           page: this.currentPage,
           pageSize: this.pageSize
@@ -267,8 +270,8 @@
           "&sexInt=" + this.gender +
           "&ageSmall=" + (this.age ? this.age[0] : '') +
           "&ageLarge=" + (this.age ? this.age[1] : '') +
-          "&registerTimeStart=" + (this.time != [] ? this.time[0].getTime() : '') +
-          "&registerTimeEnd=" + (this.time != [] ? this.time[1].getTime() : '') +
+          "&registerTimeStart=" + (this.time != [] ? (this.time[0] == null ? '': this.time[0].getTime()) : '') +
+          "&registerTimeEnd=" + (this.time != [] ? (this.time[1] == null ? '': this.time[1].getTime()) : '') +
           "&remarkStatus=" + this.remark
 //        console.log(url);
         var oA = document.createElement('a');
@@ -279,6 +282,7 @@
       },
       getPerPageNum(perPage) {
         this.pageSize = perPage;
+        this.searchPoetry();
       },
       getCurrentPage(page) {
 //        console.log('pay page==' + page);

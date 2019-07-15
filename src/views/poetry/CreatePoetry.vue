@@ -45,7 +45,7 @@
       </b-row>
       <b-row class="mt-4">
         <b-col sm="1">
-          <label class="mt-1">所属剧集:</label>
+          <label class="mt-1">所属课程:</label>
         </b-col>
         <b-col sm="4">
           <b-row>

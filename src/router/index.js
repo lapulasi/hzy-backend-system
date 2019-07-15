@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+const DefaultPage = () => import('@/containers/DefaultPage')
 // Containers
 const DefaultContainer = () => import('@/containers/DefaultContainer')
 
@@ -42,120 +42,132 @@ export default new Router({
       path: '/',
       redirect: '/login/login',
       name: 'Home',
-      component: DefaultContainer,
+      component: DefaultPage,
       children: [
-        {
-          path: 'poet/poetList',
-          name: 'PoetList',
-          component: PoetList
-        },
         {
           path: 'login/login',
           name: 'Login',
           component: Login
         },
         {
-          path: 'poet',
+          path: '/',
           redirect: '/poet/poetList',
-          name: 'Poet',
-          component: {
-            render (c) { return c('router-view') }
-          },
+          component: DefaultContainer,
           children: [
+
             {
               path: 'poet',
+              redirect: '/poet/poetList',
               name: 'Poet',
-              component: PoetList
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: 'poetList',
+                  name: 'PoetList',
+                  component: PoetList
+                },
+                {
+                  path: 'new-poet',
+                  name: 'New Poet',
+                  component: NewPoet
+                },
+                {
+                  path: 'poet-management',
+                  name: 'Poet Management',
+                  component: ContentManagement
+                }
+              ]
             },
             {
-              path: 'new-poet',
-              name: 'New Poet',
-              component: NewPoet
+              path: 'poetry',
+              redirect: '/poetry/poetry-list',
+              name: 'Poetry',
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: 'poetry-list',
+                  name: 'Poetry List',
+                  component: PoetryList
+                },
+                {
+                  path: 'create-poetry',
+                  name: 'Create Poetry',
+                  component: CreatePoetry
+                }
+              ]
             },
             {
-              path: 'poet-management',
-              name: 'Poet Management',
-              component: ContentManagement
-            }
-          ]
-        },
-        {
-          path: 'poetry',
-          redirect: '/poetry/poetry-list',
-          name: 'Poetry',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'poetry-list',
-              name: 'Poetry List',
-              component: PoetryList
+              path: 'hotWord',
+              redirect: '/hotWord/hotWord-list',
+              name: 'HotWord',
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: 'hotWord-list',
+                  name: 'HotWord List',
+                  component: Messages
+                }
+              ]
             },
             {
-              path: 'create-poetry',
-              name: 'Create Poetry',
-              component: CreatePoetry
-            }
-          ]
-        },
-        {
-          path: 'hotWord',
-          redirect: '/hotWord/hotWord-list',
-          name: 'HotWord',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'hotWord-list',
-              name: 'HotWord List',
-              component: Messages
-            }
-          ]
-        },
-        {
-          path: 'index',
-          redirect: '/index/card-list',
-          name: 'Index',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'card-list',
-              name: 'Card List',
-              component: CardList
+              path: 'index',
+              redirect: '/index/card-list',
+              name: 'Index',
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: 'card-list',
+                  name: 'Card List',
+                  component: CardList
+                },
+                {
+                  path: 'create-card',
+                  name: 'Create Card',
+                  component: CreateCard
+                }
+              ]
             },
             {
-              path: 'create-card',
-              name: 'Create Card',
-              component: CreateCard
-            }
-          ]
-        },
-        {
-          path: '/user',
-          redirect: '/user/user-list',
-          name: 'User',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'user-list',
-              name: 'User List',
-              component: UserList
-            },
-            {
-              path: 'user-detail',
-              name: 'User Detail',
-              component: UserDetail
+              path: '/user',
+              redirect: '/user/user-list',
+              name: 'User',
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: 'user-list',
+                  name: 'User List',
+                  component: UserList
+                },
+                {
+                  path: 'user-detail',
+                  name: 'User Detail',
+                  component: UserDetail
+                }
+              ]
             }
           ]
         }
       ]
-    },
-
+    }
   ]
 })

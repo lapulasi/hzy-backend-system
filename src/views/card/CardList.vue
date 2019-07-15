@@ -101,7 +101,7 @@
               <td>
                 <div>
                   <a class="operate" href="javascript:;" @click="sort(index)">排序</a>
-                  <a class="operate" href="javascript:;" @click="hide(index)">状态</a>
+                  <a class="operate" href="javascript:;" @click="hide(index)">{{list.isShow == true ? '隐藏' : '显示'}}</a>
                   <a class="operate" href="javascript:;" @click="goEditor(index)">编辑</a>
                   <a class="operate" href="javascript:;" @click="deletePote(index)">删除</a>
                 </div>
@@ -189,6 +189,7 @@
         this.minNum = '';
         this.maxNum = '';
         this.shelfStatus = '全部';
+        this.getCardList();
       },
       getCardList() {
         this.API.getCardList({
@@ -196,8 +197,8 @@
           poetryTitle: this.poetryName,
           courseSmall: this.minNum,
           courseLarge: this.maxNum,
-          frontendTimeStart: this.time ? this.time[0].getTime() : '',
-          frontendTimeEnd: this.time ? this.time[1].getTime() : '',
+          frontendTimeStart: this.time ? (this.time[0] == null ? '': this.time[0].getTime()) : '',
+          frontendTimeEnd: this.time ? (this.time[1] == null ? '': this.time[1].getTime()) : '',
           frontendStatus: this.shelfStatus == '全部' ? '' : this.shelfStatus,
           page: this.currentPage,
           pageSize: this.pageSize
@@ -304,6 +305,7 @@
       },
       getPerPageNum(perPage) {
         this.pageSize = perPage;
+        this.searchPoetry();
       },
       getCurrentPage(page) {
 //        console.log('pay page==' + page);

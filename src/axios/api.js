@@ -88,8 +88,7 @@ const Api = {
   {
     return axios.post(`${baseUrl.baseUrl}/changeAuthorShowingStatus`, params);
     // return service.POST('/changeAuthorShowingStatus', params);
-  }
-  ,
+  },
   /*
    * 诗人列表--删除
    * */
@@ -152,7 +151,9 @@ const Api = {
    * */
   hidePoetry(params)
   {
-    return axios.post(`${baseUrl.baseUrl}/changePoetryShowingStatus`, qs.stringify(params));
+    return axios.get(`${baseUrl.baseUrl}/changePoetryShowingStatus`, {
+      params:params
+    });
   }
   ,
   /*
@@ -214,16 +215,16 @@ const Api = {
     return axios.get(`${baseUrl.baseUrl}/setSerialNumbe`, {
       params: params
     });
-  }
-  ,
+  },
   /*
    * 首页卡片列表--隐藏
    * */
   hideCardList(params)
   {
-    return axios.post(`${baseUrl.baseUrl}/changeShowingStatus`, qs.stringify(params));
-  }
-  ,
+    return axios.get(`${baseUrl.baseUrl}/changeShowingStatus`, {
+      params: params
+    });
+  },
   /*
    * 首页卡片列表--删除
    * */
@@ -254,7 +255,7 @@ const Api = {
   * 添加热搜词
   * */
   addHotSearchWord(params) {
-    return axios.post(`${baseUrl.baseUrl}/addHotSearchWord`, qs.stringify(params));
+    return axios.post(`${baseUrl.baseUrl}/addHotSearchWord`, params);
   },
   /*
   * 获取热词列表

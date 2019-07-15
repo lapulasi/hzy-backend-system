@@ -2,11 +2,11 @@
   <div class="app">
     <AppHeader fixed>
       <b-row>
-        <b-col cols="3" offset-md="1">
-          <img class="navbar-brand-full" src="img/szy-logo.jpeg" width="50" height="50" alt="">
+        <b-col cols="2">
+          <img class="navbar-brand-full" src="img/szy-logo.jpeg" width="40" height="40" style="margin-left: 6px; margin-top: 3px;" alt="">
         </b-col>
-        <b-col cols="8" style="line-height: 50px; font-size: 18px; font-weight: bold">
-          混子曰背古诗
+        <b-col cols="9" style="line-height: 50px; font-size: 16px; font-weight: bold; margin-left: 6px;">
+          混子曰背古诗管理后台
         </b-col>
       </b-row>
       <SidebarToggler class="d-lg-none" display="md" mobile />

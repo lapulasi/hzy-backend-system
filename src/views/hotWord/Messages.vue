@@ -239,6 +239,7 @@
       },
       getPerPageNum(perPage) {
         this.pageSize = perPage;
+        this.getHotSearchWords();
       },
       getCurrentPage(page) {
 //        console.log('pay page==' + page);

@@ -7,25 +7,25 @@
             <b-card no-body class="p-4">
               <b-card-body>
                 <b-form>
-                  <h1>Login</h1>
-                  <p class="text-muted">Sign In to your account</p>
+                  <h1>混子曰背古诗后台管理系统</h1>
+                  <p class="text-muted">请输入您的账号</p>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text><i class="icon-user"></i></b-input-group-text>
                     </b-input-group-prepend>
-                    <b-form-input type="text" v-model="account" class="form-control" placeholder="Username"
+                    <b-form-input type="text" v-model="account" class="form-control" placeholder="用户名"
                                   autocomplete="username email"/>
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend>
                       <b-input-group-text><i class="icon-lock"></i></b-input-group-text>
                     </b-input-group-prepend>
-                    <b-form-input type="password" v-model="password" class="form-control" placeholder="Password"
+                    <b-form-input type="password" v-model="password" class="form-control" placeholder="密码"
                                   autocomplete="current-password"/>
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button variant="primary" class="px-4" @click="signIn">Login</b-button>
+                      <b-button variant="primary" class="px-4" @click="signIn">登录</b-button>
                     </b-col>
                     <!--<b-col cols="6" class="text-right">
                       <b-button variant="link" class="px-0">Forgot password?</b-button>
@@ -98,4 +98,3 @@
   }
 
 </script>
-

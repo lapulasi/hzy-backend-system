@@ -10,7 +10,7 @@
             <b-row>
               <b-col cols="2">{{poetryData.authorName}}</b-col>
               <b-col offset-md="7" cols="3">
-                <a class="con-manage" href="javascript:;" @click="hidePoet">隐藏</a>
+                <a class="con-manage" href="javascript:;" @click="hidePoet">{{poetryData.isShow?'隐藏':'显示'}}</a>
                 <a class="con-manage" href="javascript:;" @click="editorPoet">编辑</a>
                 <a class="con-manage" href="javascript:;" @click="deletePoet">删除</a>
               </b-col>
@@ -110,7 +110,7 @@
               <td>
                 <div>
                   <a class="operate" href="javascript:;" @click="sort(index)">排序</a>
-                  <a class="operate" href="javascript:;" @click="hide(index)">状态</a>
+                  <a class="operate" href="javascript:;" @click="hide(index)">{{list.isShow == true ? '隐藏' : '显示'}}</a>
                   <a class="operate" href="javascript:;" @click="goEditor(index)">编辑</a>
                   <a class="operate" href="javascript:;" @click="deletePote(index)">删除</a>
                 </div>
@@ -309,6 +309,7 @@
 //          console.log(JSON.stringify(res.data, null, 4))
           if (res.data.errorCode == 200) {
             alert(res.data.retString);
+            this.getAuthorAndPoetries();
           } else {
             alert(res.data.errorMsg);
           }
@@ -392,7 +393,7 @@
           page: 0,
           pageSize: 10
         }).then(res => {
-//          console.log(JSON.stringify(res.data, null, 4));
+          console.log(JSON.stringify(res.data, null, 4));
           if (res.data.errorCode == 200) {
             this.poetryData = res.data.retString;
             this.totalNums = res.data.retString.poetryCount;

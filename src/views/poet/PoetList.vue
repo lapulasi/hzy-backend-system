@@ -106,7 +106,7 @@
                 <div>
                   <a class="operate" href="javascript:;" @click="goPoetManagement(index)">诗词管理</a>
                   <a class="operate" href="javascript:;" @click="sort(index)">排序</a>
-                  <a class="operate" href="javascript:;" @click="hide(index)">隐藏</a>
+                  <a class="operate" href="javascript:;" @click="hide(index)">{{list.isShow == true ? '隐藏': '显示'}}</a>
                   <a class="operate" href="javascript:;" @click="goEditor(index)">编辑</a>
                   <a class="operate" href="javascript:;" @click="deletePoet(index)">删除</a>
                 </div>
@@ -129,7 +129,8 @@
       <b-row>
         <cPage @currentPage="getCurrentPage"
                @perPageNum="getPerPageNum"
-               :totalNums="totalNums" :isPagePerList="true"></cPage>
+               :totalNums="totalNums"
+               :isPagePerList="true"></cPage>
       </b-row>
     </b-card>
   </div>
@@ -187,6 +188,7 @@
     methods: {
       getPerPageNum(perPage) {
         this.pageSize = perPage;
+        this.searchAuthor();
       },
       getCurrentPage(page) {
 //        console.log('pay page==' + (page -1) );
@@ -200,6 +202,7 @@
         this.time = '';
         this.minNum = '';
         this.maxNum = '';
+        this.searchAuthor();
       },
       goPoetManagement(index) {
         this.$router.push({
@@ -297,8 +300,8 @@
           poetryCountSmall: this.minNum,
           poetryCountLarge: this.maxNum,
           isShow: this.status == '全部' ? '' : this.status,
-          createTimeStart: this.time != '' ? this.time[0].getTime() : '',
-          createTimeEnd: this.time != '' ? this.time[1].getTime() : '',
+          createTimeStart: this.time != '' ? (this.time[0] == null ? '': this.time[0].getTime()) : '',
+          createTimeEnd: this.time != '' ? (this.time[1] == null ? '': this.time[1].getTime()) : '',
           page: this.currentPage,
           pageSize: this.pageSize
         }).then(res => {

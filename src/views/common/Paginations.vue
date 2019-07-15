@@ -16,15 +16,17 @@
       </b-col>
       <b-col :cols="isPagePerList?8:9">
         <div class="pagelist">
+          <span v-show="current_page>2" class="jump pageText" @click="goFirst"> << </span>
           <span class="jump pageText" @click="prePage"> < </span>
-          <span v-show="current_page>2" class="jump" @click="jumpPage(1)">1</span>
+          <!--<span v-show="current_page>2" class="jump" @click="jumpPage(1)">1</span>-->
           <span class="ellipsis" v-show="efont">...</span>
           <span class="jump" v-for="num in indexs" :class="{bgprimary:current_page==num}"
                 @click="jumpPage(num)">{{num}}</span>
           <span class="ellipsis" v-show="efont&&current_page<pages-4">...</span>
 
           <span class="jump pageText" @click="nextPage"> > </span>
-          <span v-show="current_page<pages-1" class="jump" @click="jumpPage(pages)">{{pages}}</span>
+          <span v-show="current_page<pages-1" class="jump pageText" @click="goEnd"> >> </span>
+          <!--<span v-show="current_page<pages-1" class="jump" @click="jumpPage(pages)">{{pages}}</span>-->
 
           <span class="jumppoint">跳转到：</span>
           <span class="jumpinp">
@@ -33,7 +35,7 @@
           <span class="jump gobtn" @click="jumpPage(changePage)">GO</span>
         </div>
       </b-col>
-      <b-col :cols="isPagePerList?2:3">共{{pages}}条记录，第{{current_page}}/{{pages}}页</b-col>
+      <b-col :cols="isPagePerList?2:3">共{{totalNums}}条记录，第{{current_page}}/{{pages}}页</b-col>
     </b-row>
   </div>
 </template>
@@ -93,6 +95,16 @@
       },
     },
     methods: {
+      goFirst(){
+
+        this.current_page = 1;
+//        console.log(this.current_page)
+        this.$emit('currentPage', this.current_page)
+      },
+      goEnd(){
+        this.current_page = this.pages;
+        this.$emit('currentPage', this.current_page)
+      },
       perPage() {
         console.log(this.perPageNum);
         this.$emit('perPageNum', this.perPageNum)
@@ -101,12 +113,14 @@
         if (this.current_page > 1) {
           this.current_page--;
         }
+//        this.current_page = 1;
         this.$emit('currentPage', this.current_page)
       },
       nextPage() {
         if (this.current_page < this.pages) {
           this.current_page++;
         }
+//        this.current_page = this.pages;
         this.$emit('currentPage', this.current_page)
       },
       jumpPage: function (id) {
